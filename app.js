@@ -26,6 +26,9 @@ const store = createStore(reducer, defaultState);
 
 function addView(viewFunc) {
   viewFunc(defaultState);
+  store.subscribe(() => {
+    viewFunc(store.getState());
+  })
 }
 
 addView((state) => {
