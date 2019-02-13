@@ -1,4 +1,4 @@
-const { createStore } = require('redux');
+const { createStore, applyMiddleware } = require('redux');
 
 const defaultState = {
   courses: [
@@ -17,9 +17,13 @@ const defaultState = {
   ]
 };
 
+
+// reducer function
 function reducer(state, action) {
   switch(action.type) {
     case 'ADD_COURSE':
+    // don't modify the state, return a new state that is the
+    // old state + the new value
       return Object.assign({}, state, {
         courses: [...state.courses, action.course]
       });
@@ -28,8 +32,15 @@ function reducer(state, action) {
   }
 }
 
+const logger = store => next => action => {
+  console.log('dispatching ', action);
+  let result = next(action);
+  console.log('state after action ', store.getState());
+  return result;
+}
+
 // create redux store
-const store = createStore(reducer, defaultState);
+const store = createStore(reducer, defaultState, applyMiddleware(logger));
 
 function addView(viewFunc) {
   viewFunc(defaultState);
