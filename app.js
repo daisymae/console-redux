@@ -18,7 +18,14 @@ const defaultState = {
 };
 
 function reducer(state, action) {
-  return state;
+  switch(action.type) {
+    case 'ADD_COURSE':
+      return Object.assign({}, state, {
+        courses: [...state.courses, action.course]
+      });
+    default:
+      return state;
+  }
 }
 
 // create redux store
