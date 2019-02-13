@@ -40,8 +40,10 @@ addView((state) => {
 });
 
 
-defaultState.courses.push({
-  name: 'this is a new course',
-  topic: 'really does not matter'
-});
-
+store.dispatch({
+  type: 'ADD_COURSE',
+  course: {
+    name: 'this is a new course',
+    topic: 'really does not matter'
+  }
+})
